@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.codepath.flickster.adapters.MoviesAdapter;
 import com.codepath.flickster.model.Movie;
@@ -37,6 +36,28 @@ public class MovieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
 
+
+        //String title=getIntent().getStringExtra("MOVIE_TITLE");
+        //String overview=getIntent().getStringExtra("MOVIE_OVERVIEW");
+
+        //TextView tvTitle=(TextView)findViewById(R.id.tvTitle);
+        //tvTitle.setText(title);
+
+        //TextView tvOverview=(TextView)findViewById(R.id.tvOverview);
+       // tvOverview.setText(overview);
+      //  RecyclerView rvMovie=findViewById(R.id.rvMovies);
+       // movies=new ArrayList<>();
+       // final MoviesAdapter moviesAdapter=new MoviesAdapter(movies);
+       // rvMovie.setLayoutManager(new RecyclerView.LayoutManager() {
+         /*
+            @Override
+            public RecyclerView.LayoutParams generateDefaultLayoutParams() {
+                return null;
+            }
+        });
+        rvMovie.setAdapter(moviesAdapter);
+        */
+
         RecyclerView rvMovie=findViewById(R.id.rvMovies);
         movies=new  ArrayList<>();
         final MoviesAdapter adapter=new MoviesAdapter(this,movies);
@@ -44,23 +65,25 @@ public class MovieActivity extends AppCompatActivity {
         rvMovie.setAdapter(adapter);
 
         AsyncHttpClient client =new AsyncHttpClient();
-        client.get(MOVIE_URL, new JsonHttpResponseHandler(){
-
+        client.get(MOVIE_URL,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                JSONArray movieJsonArray = null;
                 try {
-                    JSONArray movieJsonArray = response.getJSONArray("results");
+                    movieJsonArray = response.getJSONArray("results");
                     movies.addAll(Movie.fromJSONArray(movieJsonArray));
                     adapter.notifyDataSetChanged();
-                    Log.d("smile", movies.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+
+                //super.onSuccess(statusCode, headers, response);
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
     }
