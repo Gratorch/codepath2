@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.SearchView;
 
 import com.codepath.flickster.adapters.MoviesAdapter;
 import com.codepath.flickster.model.Movie;
@@ -23,6 +24,7 @@ public class MovieActivity extends AppCompatActivity {
 
     private static final String MOVIE_URL="https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
     List<Movie> movies;
+    SearchView searchView;
 
     //Add RecyclerView support library to the Gradle build file-DONE
     //Define a model class to use as the data source-DONE
@@ -63,6 +65,19 @@ public class MovieActivity extends AppCompatActivity {
         final MoviesAdapter adapter=new MoviesAdapter(this,movies);
         rvMovie.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
         rvMovie.setAdapter(adapter);
+
+        searchView=(SearchView)findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         AsyncHttpClient client =new AsyncHttpClient();
         client.get(MOVIE_URL,new JsonHttpResponseHandler(){

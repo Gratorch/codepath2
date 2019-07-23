@@ -24,11 +24,11 @@
     <RatingBar
         android:id="@+id/ratingBar"
         style="@style/Widget.AppCompat.RatingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-       android:isIndicator="true"
+        android:layout_width="346dp"
+        android:layout_height="46dp"
+        android:isIndicator="true"
         android:numStars="10"
-       android:rating="8.2" />
+        android:rating="8.2" />
 
     <TextView
         android:id="@+id/tvOverview"

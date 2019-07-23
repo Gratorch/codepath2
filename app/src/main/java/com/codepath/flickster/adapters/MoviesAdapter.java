@@ -13,14 +13,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.codepath.flickster.DetailActivity;
+import com.codepath.flickster.GlideApp;
 import com.codepath.flickster.R;
 import com.codepath.flickster.model.Movie;
 
 import org.parceler.Parcels;
 
 import java.util.List;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder>  {
 
@@ -156,9 +158,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
             }
 
             int radius=30, margin=10;
-            Glide.with(context).load(imageURL).into(ivPoster);
             //Glide.with(context).load(imageURL).into(ivPoster);
-            //Glide.with(context).load(imageURL).transform(new BlurTransformation()).into(imageURL);
+            //Glide.with(context).load(imageURL).into(ivPoster);
+            //GlideApp.with(context).load(imageURL).transform(new BlurTransformation()).into(imageURL);
+            GlideApp.with(context).load(imageURL).transform(new RoundedCornersTransformation(radius,margin)).into(ivPoster);
             // Add click listener on the whole row
             // Navigate to detail activity on tap
             container.setOnClickListener(new View.OnClickListener() {
